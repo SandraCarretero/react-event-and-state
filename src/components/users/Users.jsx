@@ -2,20 +2,26 @@ import { useState } from 'react';
 import { USERS } from '../../constants/users';
 
 const Users = () => {
-	const [user, setUser] = useState(0);
+	const [userCounter, setUserCounter] = useState(0);
+	const currentUser = USERS[userCounter];
+	const isFirstUser = userCounter === 0;
+	const isLasttUser = userCounter === USERS.length - 1;
 
 	return (
 		<>
-			<img src={USERS[user].profileImage} alt='user image' />
-			<h1>Name: {USERS[user].name}</h1>
-			<p>Username: {USERS[user].username}</p>
-			<p>Email: {USERS[user].email}</p>
-			<button disabled={user === 0} onClick={() => previousUser(user, setUser)}>
+			<img src={currentUser.profileImage} alt='user image' />
+			<h2>Name: {currentUser.name}</h2>
+			<p>Username: {currentUser.username}</p>
+			<p>Email: {currentUser.email}</p>
+			<button
+				disabled={isFirstUser}
+				onClick={() => previousUser(userCounter, setUserCounter)}
+			>
 				Previous
 			</button>
 			<button
-				disabled={user === USERS.length - 1}
-				onClick={() => nextUser(user, setUser)}
+				disabled={isLasttUser}
+				onClick={() => nextUser(userCounter, setUserCounter)}
 			>
 				Next
 			</button>
@@ -23,11 +29,11 @@ const Users = () => {
 	);
 };
 
-const nextUser = (user, setUser) => {
-	setUser(user + 1);
+const nextUser = (userCounter, setUserCounter) => {
+	setUserCounter(userCounter + 1);
 };
-const previousUser = (user, setUser) => {
-	setUser(user - 1);
+const previousUser = (userCounter, setUserCounter) => {
+	setUserCounter(userCounter - 1);
 };
 
 export default Users;
